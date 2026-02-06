@@ -1,5 +1,6 @@
 // Core Module
 const path = require('path');
+const fs = require('fs');
 
 // External Module
 const express = require('express');
@@ -7,7 +8,10 @@ const session = require('express-session');
 const MongoDBStore = require('connect-mongodb-session')(session);
 const { default: mongoose } = require('mongoose');
 const multer = require('multer')
-const DB_PATH = "mongodb+srv://root:Gulab@gulabcoading.7usdzzn.mongodb.net/airbnb?appName=GulabCoading";
+//const DB_PATH = "mongodb+srv://root:Gulab@gulabcoading.7usdzzn.mongodb.net/airbnb?appName=GulabCoading";
+const DB_PATH = process.env.MONGO_URI;
+const PORT = process.env.PORT || 3000;
+
 
 //Local Module
 const storeRouter = require("./routes/storeRouter")
@@ -18,6 +22,10 @@ const errorsController = require("./controllers/errors");
 
 
 const app = express();
+
+if (!fs.existsSync('uploads')) {
+  fs.mkdirSync('uploads');
+}
 
 app.set('view engine', 'ejs');
 app.set('views', 'views');
@@ -65,9 +73,9 @@ app.use("/host/uploads", express.static(path.join(rootDir, 'uploads')))
 app.use("/homes/uploads", express.static(path.join(rootDir, 'uploads')))
 
 app.use(session({
-  secret: "KnowledgeGate AI with Complete Coding",
+  secret: "process.env.SESSION_SECRET",
   resave: false,
-  saveUninitialized: true,
+  saveUninitialized: false,
   store
 }));
 
@@ -89,7 +97,9 @@ app.use("/host", hostRouter);
 
 app.use(errorsController.pageNotFound);
 
-const PORT = 3003;
+//const PORT = 3003;
+
+
 
 mongoose.connect(DB_PATH).then(() => {
   console.log('Connected to Mongo');
