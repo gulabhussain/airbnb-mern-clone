@@ -1,13 +1,20 @@
 {
   "name": "airbnb-mern-clone",
   "version": "1.0.0",
+  "description": "Airbnb clone using Node.js, Express, MongoDB, EJS",
   "main": "app.js",
   "scripts": {
-    "dev": "nodemon app.js",
-    "build:css": "tailwindcss -i ./views/input.css -o ./public/output.css",
-    "start": "node app.js"
+    "start": "node app.js",
+    "build:css": "tailwindcss -i ./views/input.css -o ./public/output.css"
   },
-  "keywords": [],
+  "keywords": [
+    "node",
+    "express",
+    "mongodb",
+    "ejs",
+    "airbnb",
+    "mern"
+  ],
   "author": "Gulab Hussain",
   "license": "ISC",
   "dependencies": {
@@ -20,13 +27,15 @@
     "express-validator": "^7.2.1",
     "mongodb": "^6.10.0",
     "mongoose": "^8.12.1",
-    "multer": "^2.0.2",
-    "mysql2": "^3.11.4"
+    "multer": "^2.0.2"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.20",
     "nodemon": "^3.1.7",
     "postcss": "^8.4.47",
     "tailwindcss": "^3.4.13"
+  },
+  "engines": {
+    "node": ">=18"
   }
 }

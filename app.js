@@ -1,6 +1,5 @@
 // Core Module
 const path = require('path');
-const fs = require('fs');
 
 // External Module
 const express = require('express');
@@ -22,10 +21,6 @@ const errorsController = require("./controllers/errors");
 
 
 const app = express();
-
-if (!fs.existsSync('uploads')) {
-  fs.mkdirSync('uploads');
-}
 
 app.set('view engine', 'ejs');
 app.set('views', 'views');
@@ -73,11 +68,12 @@ app.use("/host/uploads", express.static(path.join(rootDir, 'uploads')))
 app.use("/homes/uploads", express.static(path.join(rootDir, 'uploads')))
 
 app.use(session({
-  secret: "process.env.SESSION_SECRET",
+  secret: process.env.SESSION_SECRET || "defaultsecret",
   resave: false,
   saveUninitialized: false,
   store
 }));
+
 
 app.use((req, res, next) => {
   req.isLoggedIn = req.session.isLoggedIn
